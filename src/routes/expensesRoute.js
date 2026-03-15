@@ -34,5 +34,32 @@ router.post("/", async (req, res) => {
     }
 })
 
+router.put("/:id", async (req, res) => {
+    try {
+        const expense_id = req.params.id;
+        const {user_id, expense, expense_amount, expense_date, category_id } = req.body;
+        
+        const queryString = 'UPDATE expenses SET user_id=?, expense=?, expense_amount=?, expense_date=?, category_id=? WHERE id=?'
+        const queryValues = [user_id,expense,expense_amount,expense_date,category_id,expense_id]
+        const result = await pool.query(queryString, queryValues);
+        return res.status(200).json({ message: "expense updated successfully" }, result)
+
+    } catch (error) {
+        return res.status(500).send(error)
+    }
+})
+
+router.delete("/:id", async (req, res) => {
+    try {
+        const expense_id = req.params.id;
+        console.log(expense_id)
+        const queryString = 'delete  from expenses where id=?'
+        const queryValues = [expense_id]
+        const result = await pool.query(queryString, queryValues);
+        return res.status(200).send({ message: "expense deleted successfully" })
+    } catch (error) {
+        return res.status(500).send(error)
+    }
+})
 
 export default router;
