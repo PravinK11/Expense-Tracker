@@ -4,7 +4,7 @@ import pool from "../../db.js";
 
 router.get('/', async (req, res) => {
     try {
-        const [rows] = await pool.query('select * from expenses where user_id=5');
+        const [rows] = await pool.query('SELECT expense.id,expense.user_id,expense.expense,expense.expense_amount,expense.expense_date,category.category FROM expenses expense JOIN category category ON expense.category_id = category.id;');
         if (!rows) {
             return res.status(400).json({ message: "expenses not found" })
         }
