@@ -37,10 +37,10 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
     try {
         const expense_id = req.params.id;
-        const {user_id, expense, expense_amount, expense_date, category_id } = req.body;
+        const { expense, expense_amount, expense_date, category_id } = req.body;
         
-        const queryString = 'UPDATE expenses SET user_id=?, expense=?, expense_amount=?, expense_date=?, category_id=? WHERE id=?'
-        const queryValues = [user_id,expense,expense_amount,expense_date,category_id,expense_id]
+        const queryString = 'UPDATE expenses SET  expense=?, expense_amount=?, expense_date=?, category_id=? WHERE id=?'
+        const queryValues = [expense,expense_amount,expense_date,category_id,expense_id]
         const result = await pool.query(queryString, queryValues);
         return res.status(200).json({ message: "expense updated successfully" }, result)
 
