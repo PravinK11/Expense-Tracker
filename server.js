@@ -25,6 +25,6 @@ app.use("/auth", authRoutes);
 app.use('/expenses', expenseRoutes);
 app.use('/users', usersRoutes );
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
     console.log(`App is litening to the port ${port}`)
 });
