@@ -13,7 +13,22 @@ dotenv.config();
 const port = process.env.PORT || 8080;
 
 
-app.use(cors());
+const allowedOrigins = [
+  // "http://localhost:5173", // for local development
+  "https://expense-ui-navy.vercel.app" // your live frontend
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 app.use(express.json());
 app.use((req, res, next) => {
   console.log("Incoming Request:", req.method, req.url);
